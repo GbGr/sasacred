@@ -92,7 +92,7 @@
             })
 
             function initGame() {
-                document.querySelector('#renderCanvas').requestFullscreen()
+                try {canvas.requestFullscreen()} catch {}
                 BABYLON.Engine.audioEngine.unlock()
                 themeSound.play()
                 button.dispose()
