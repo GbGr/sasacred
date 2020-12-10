@@ -37,12 +37,13 @@
     <script>
         // THE GOVNOCODE
         Ammo({ locateLocate: () => 'https://gbgr.github.io/sasacred/ammo.wasm.wasm' }).then((ammo) => {
+            let button;
             const canvas = document.querySelector('#renderCanvas')
             const engine = new BABYLON.Engine(canvas, true, {}, true)
             const scene = new BABYLON.Scene(engine);
 
             const themeSound = new BABYLON.Sound('theme', 'https://dl.dropbox.com/s/59sssa2ljdeeh09/maintheme.mp3', scene, () => {
-                const button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
+                button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
                 button.width = 0.2;
                 button.height = "40px";
                 button.color = "magenta";
