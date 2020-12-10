@@ -135,6 +135,11 @@
                         teleportSound.play()
                     }
                 })
+
+
+                engine.runRenderLoop(() => {
+                    scene.render()
+                })
             })
         })
     </script>
