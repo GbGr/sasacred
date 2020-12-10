@@ -29,12 +29,20 @@
         (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
     </script>
     <script>
+        // THE GOVNOCODE
         Ammo({ locateLocate: () => 'https://gbgr.github.io/sasacred/ammo.wasm.wasm' }).then((ammo) => {
             const canvas = document.querySelector('#renderCanvas')
             const engine = new BABYLON.Engine(canvas, true, {}, true)
             const scene = new BABYLON.Scene(engine);
 
-            const themeSound = new BABYLON.Sound('theme', 'https://dl.dropbox.com/s/59sssa2ljdeeh09/maintheme.mp3', scene, undefined, { volume: 0.5, loop: true })
+            const themeSound = new BABYLON.Sound('theme', 'https://dl.dropbox.com/s/59sssa2ljdeeh09/maintheme.mp3', scene, () => {
+                const button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
+                button.width = 0.2;
+                button.height = "40px";
+                button.color = "magenta";
+                button.background = "violet";
+                advancedTexture.addControl(button);
+            }, { volume: 0.5, loop: true })
             const collideSound = new BABYLON.Sound('collide', 'https://dl.dropbox.com/s/w6rt57gsrqcx86x/collide.mp3', scene)
             const dangerSound = new BABYLON.Sound('danger', 'https://dl.dropbox.com/s/2mi0tlzjoqluz9j/danger.mp3', scene)
             const teleportSound = new BABYLON.Sound('teleport', 'https://dl.dropbox.com/s/yw2ita3wy7rm8sc/teleport.mp3', scene)
@@ -57,13 +65,6 @@
             const light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
 
             const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-            const button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
-            button.width = 0.2;
-            button.height = "40px";
-            button.color = "magenta";
-            button.background = "violet";
-            advancedTexture.addControl(button);
 
             engine.runRenderLoop(() => {
                 scene.render()
