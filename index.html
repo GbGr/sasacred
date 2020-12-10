@@ -10,114 +10,116 @@
     <script src="https://raw.githubusercontent.com/kripken/ammo.js/master/builds/ammo.js"></script>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script>
-        const canvas = document.querySelector('#renderCanvas')
-        const engine = new BABYLON.Engine(canvas, true, {}, true)
-        const scene = new BABYLON.Scene(engine);
+        Ammo().then((ammo) => {
+            const canvas = document.querySelector('#renderCanvas')
+            const engine = new BABYLON.Engine(canvas, true, {}, true)
+            const scene = new BABYLON.Scene(engine);
 
-        const themeSound = new BABYLON.Sound('theme', 'https://dl.dropbox.com/s/59sssa2ljdeeh09/maintheme.mp3', scene, undefined, { volume: 0.5, loop: true })
-        const collideSound = new BABYLON.Sound('collide', 'https://dl.dropbox.com/s/w6rt57gsrqcx86x/collide.mp3', scene)
-        const dangerSound = new BABYLON.Sound('danger', 'https://dl.dropbox.com/s/2mi0tlzjoqluz9j/danger.mp3', scene)
-        const teleportSound = new BABYLON.Sound('teleport', 'https://dl.dropbox.com/s/yw2ita3wy7rm8sc/teleport.mp3', scene)
+            const themeSound = new BABYLON.Sound('theme', 'https://dl.dropbox.com/s/59sssa2ljdeeh09/maintheme.mp3', scene, undefined, { volume: 0.5, loop: true })
+            const collideSound = new BABYLON.Sound('collide', 'https://dl.dropbox.com/s/w6rt57gsrqcx86x/collide.mp3', scene)
+            const dangerSound = new BABYLON.Sound('danger', 'https://dl.dropbox.com/s/2mi0tlzjoqluz9j/danger.mp3', scene)
+            const teleportSound = new BABYLON.Sound('teleport', 'https://dl.dropbox.com/s/yw2ita3wy7rm8sc/teleport.mp3', scene)
 
-        engine.isDeterministicLockStep
-        var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 8, 20, BABYLON.Vector3.Zero(), scene);
+            engine.isDeterministicLockStep
+            var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 8, 20, BABYLON.Vector3.Zero(), scene);
 
-        camera.attachControl(canvas, true);
-        camera.alpha = 4.0310;
-        camera.beta = 0.9791;
-        camera.radius = 20;
+            camera.attachControl(canvas, true);
+            camera.alpha = 4.0310;
+            camera.beta = 0.9791;
+            camera.radius = 20;
 
-        scene.clearColor = BABYLON.Color4.FromHexString('#00152A')
-        scene.clearColor.a = 1
+            scene.clearColor = BABYLON.Color4.FromHexString('#00152A')
+            scene.clearColor.a = 1
 
-        const gl = new BABYLON.GlowLayer('gl', scene)
+            const gl = new BABYLON.GlowLayer('gl', scene)
 
-        const physics = new BABYLON.AmmoJSPlugin(false)
-        scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), physics)
-        const light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
+            const physics = new BABYLON.AmmoJSPlugin(false, ammo)
+            scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), physics)
+            const light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
 
-        const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+            const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-        const button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
-        button.width = 0.2;
-        button.height = "40px";
-        button.color = "magenta";
-        button.background = "violet";
-        advancedTexture.addControl(button);
-        button.onPointerClickObservable.add(() => {
-            document.querySelector('#renderCanvas').requestFullscreen()
-            BABYLON.Engine.audioEngine.unlock()
-            themeSound.play()
-            button.dispose()
-            const platformMaterial = new BABYLON.StandardMaterial('platformMaterial', scene)
-            const dangerPlatformMaterial = new BABYLON.StandardMaterial('dangerPlatformMaterial', scene)
-            platformMaterial.specularColor = BABYLON.Color3.Black()
-            dangerPlatformMaterial.specularColor = BABYLON.Color3.Black()
-            platformMaterial.diffuseColor = BABYLON.Color3.Black()
-            dangerPlatformMaterial.diffuseColor = BABYLON.Color3.Black()
-            platformMaterial.emissiveColor = BABYLON.Color3.FromHexString('#00FF28')
-            dangerPlatformMaterial.emissiveColor = BABYLON.Color3.FromHexString('#FF5000')
+            const button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
+            button.width = 0.2;
+            button.height = "40px";
+            button.color = "magenta";
+            button.background = "violet";
+            advancedTexture.addControl(button);
+            button.onPointerClickObservable.add(() => {
+                document.querySelector('#renderCanvas').requestFullscreen()
+                BABYLON.Engine.audioEngine.unlock()
+                themeSound.play()
+                button.dispose()
+                const platformMaterial = new BABYLON.StandardMaterial('platformMaterial', scene)
+                const dangerPlatformMaterial = new BABYLON.StandardMaterial('dangerPlatformMaterial', scene)
+                platformMaterial.specularColor = BABYLON.Color3.Black()
+                dangerPlatformMaterial.specularColor = BABYLON.Color3.Black()
+                platformMaterial.diffuseColor = BABYLON.Color3.Black()
+                dangerPlatformMaterial.diffuseColor = BABYLON.Color3.Black()
+                platformMaterial.emissiveColor = BABYLON.Color3.FromHexString('#00FF28')
+                dangerPlatformMaterial.emissiveColor = BABYLON.Color3.FromHexString('#FF5000')
 
-            const origin = BABYLON.MeshBuilder.CreateCylinder("cylinder", { diameter: 1, height: 20 }, scene);
-            const originMaaterial = new BABYLON.StandardMaterial('origin', scene)
-            originMaaterial.emissiveColor = BABYLON.Color3.Black()
-            originMaaterial.diffuseColor = BABYLON.Color3.FromHexString('#0041E2')
-            origin.material = originMaaterial
+                const origin = BABYLON.MeshBuilder.CreateCylinder("cylinder", { diameter: 1, height: 20 }, scene);
+                const originMaaterial = new BABYLON.StandardMaterial('origin', scene)
+                originMaaterial.emissiveColor = BABYLON.Color3.Black()
+                originMaaterial.diffuseColor = BABYLON.Color3.FromHexString('#0041E2')
+                origin.material = originMaaterial
 
-            const platform1 = BABYLON.MeshBuilder.CreateCylinder("platform", { arc: 0.4, enclose: true, height: 0.4, diameter: 3 }, scene)
+                const platform1 = BABYLON.MeshBuilder.CreateCylinder("platform", { arc: 0.4, enclose: true, height: 0.4, diameter: 3 }, scene)
 
-            const platform2 = BABYLON.MeshBuilder.CreateCylinder("platform", { arc: 0.3, enclose: true, height: 0.4, diameter: 3 }, scene)
-            platform2.rotation.y = Math.PI;
+                const platform2 = BABYLON.MeshBuilder.CreateCylinder("platform", { arc: 0.3, enclose: true, height: 0.4, diameter: 3 }, scene)
+                platform2.rotation.y = Math.PI;
 
-            platform1.material = platformMaterial
-            platform2.material = dangerPlatformMaterial
+                platform1.material = platformMaterial
+                platform2.material = dangerPlatformMaterial
 
-            origin.physicsImpostor = new BABYLON.PhysicsImpostor(origin, BABYLON.PhysicsImpostor.CylinderImpostor, { mass: 0 } )
-            platform1.physicsImpostor = new BABYLON.PhysicsImpostor(platform1, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0 } )
-            platform2.physicsImpostor = new BABYLON.PhysicsImpostor(platform2, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0 } )
-            
-            const sphere = BABYLON.MeshBuilder.CreateSphere('player', { diameter: 0.4 }, scene)
-            const sphereMaterial = new BABYLON.StandardMaterial('playerMaterial', scene)
-            sphereMaterial.emissiveColor = BABYLON.Color3.Magenta()
-            sphereMaterial.diffuseColor = BABYLON.Color3.Blue()
-            sphereMaterial.specularColor = BABYLON.Color3.Black()
-            sphere.material = sphereMaterial
-            sphere.position.z = -0.75
-            sphere.position.y = 10
-            sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 4 } )
+                origin.physicsImpostor = new BABYLON.PhysicsImpostor(origin, BABYLON.PhysicsImpostor.CylinderImpostor, { mass: 0 } )
+                platform1.physicsImpostor = new BABYLON.PhysicsImpostor(platform1, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0 } )
+                platform2.physicsImpostor = new BABYLON.PhysicsImpostor(platform2, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0 } )
+                
+                const sphere = BABYLON.MeshBuilder.CreateSphere('player', { diameter: 0.4 }, scene)
+                const sphereMaterial = new BABYLON.StandardMaterial('playerMaterial', scene)
+                sphereMaterial.emissiveColor = BABYLON.Color3.Magenta()
+                sphereMaterial.diffuseColor = BABYLON.Color3.Blue()
+                sphereMaterial.specularColor = BABYLON.Color3.Black()
+                sphere.material = sphereMaterial
+                sphere.position.z = -0.75
+                sphere.position.y = 10
+                sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 4 } )
 
-            const trail = new BABYLON.TrailMesh('trail', sphere, scene, 0.1, 20, true)
-            const trailMaterial = new BABYLON.StandardMaterial('trailMaterial', scene);
-            trailMaterial.specularColor = BABYLON.Color3.Black()
-            trailMaterial.diffuseColor = BABYLON.Color3.Black()
-            trailMaterial.emissiveColor = BABYLON.Color3.Magenta()
-            trail.material = trailMaterial;
+                const trail = new BABYLON.TrailMesh('trail', sphere, scene, 0.1, 20, true)
+                const trailMaterial = new BABYLON.StandardMaterial('trailMaterial', scene);
+                trailMaterial.specularColor = BABYLON.Color3.Black()
+                trailMaterial.diffuseColor = BABYLON.Color3.Black()
+                trailMaterial.emissiveColor = BABYLON.Color3.Magenta()
+                trail.material = trailMaterial;
 
-            var vls = new BABYLON.VolumetricLightScatteringPostProcess('vls', 1.0, camera, sphere, 100, BABYLON.Texture.BILINEAR_SAMPLINGMODE, engine, false);
+                var vls = new BABYLON.VolumetricLightScatteringPostProcess('vls', 1.0, camera, sphere, 100, BABYLON.Texture.BILINEAR_SAMPLINGMODE, engine, false);
 
-            sphere.physicsImpostor.registerOnPhysicsCollide(platform1.physicsImpostor, () => {
-                collideSound.play()
-            })
+                sphere.physicsImpostor.registerOnPhysicsCollide(platform1.physicsImpostor, () => {
+                    collideSound.play()
+                })
 
-            sphere.physicsImpostor.registerOnPhysicsCollide(platform2.physicsImpostor, () => {
-                dangerSound.play()
-            })
-            
-            scene.onBeforePhysicsObservable.add(() => {
-                origin.rotate(BABYLON.Axis.Y, 0.01)
-                platform1.rotate(BABYLON.Axis.Y, 0.01)
-                platform2.rotate(BABYLON.Axis.Y, 0.01)
-                sphere.physicsImpostor.setAngularVelocity(BABYLON.Vector3.Zero())
-                const v = sphere.physicsImpostor.getLinearVelocity()
-                v.x = 0
-                v.z = 0
-                sphere.physicsImpostor.setLinearVelocity(v)
-                if (sphere.position.y < -20) {
-                    sphere.position = new BABYLON.Vector3(0, 10, -0.75);
+                sphere.physicsImpostor.registerOnPhysicsCollide(platform2.physicsImpostor, () => {
+                    dangerSound.play()
+                })
+                
+                scene.onBeforePhysicsObservable.add(() => {
+                    origin.rotate(BABYLON.Axis.Y, 0.01)
+                    platform1.rotate(BABYLON.Axis.Y, 0.01)
+                    platform2.rotate(BABYLON.Axis.Y, 0.01)
                     sphere.physicsImpostor.setAngularVelocity(BABYLON.Vector3.Zero())
-                    sphere.physicsImpostor.setLinearVelocity(BABYLON.Vector3.Zero())
-                    teleportSound.play()
-                }
+                    const v = sphere.physicsImpostor.getLinearVelocity()
+                    v.x = 0
+                    v.z = 0
+                    sphere.physicsImpostor.setLinearVelocity(v)
+                    if (sphere.position.y < -20) {
+                        sphere.position = new BABYLON.Vector3(0, 10, -0.75);
+                        sphere.physicsImpostor.setAngularVelocity(BABYLON.Vector3.Zero())
+                        sphere.physicsImpostor.setLinearVelocity(BABYLON.Vector3.Zero())
+                        teleportSound.play()
+                    }
+                })
             })
         })
     </script>
