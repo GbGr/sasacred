@@ -7,10 +7,10 @@
 </head>
 <body>
     <canvas id="renderCanvas"></canvas>
-    <script src="/ammo.wasm.js"></script>
+    <script src="/sasacred/ammo.wasm.js"></script>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script>
-        Ammo().then((ammo) => {
+        Ammo({ locateLocate: () => 'https://gbgr.github.io/sasacred/ammo.wasm.wasm' }).then((ammo) => {
             const canvas = document.querySelector('#renderCanvas')
             const engine = new BABYLON.Engine(canvas, true, {}, true)
             const scene = new BABYLON.Scene(engine);
