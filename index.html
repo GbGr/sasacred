@@ -9,7 +9,8 @@
     <canvas id="renderCanvas"></canvas>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script>
-        const engine = new BABYLON.Engine(document.querySelector('#renderCanvas'), true, {}, true)
+        const canvas = document.querySelector('#renderCanvas')
+        const engine = new BABYLON.Engine(canvas, true, {}, true)
         const scene = new BABYLON.Scene(engine);
 
         const themeSound = new BABYLON.Sound('theme', 'https://dl.dropbox.com/s/59sssa2ljdeeh09/maintheme.mp3', scene, undefined, { volume: 0.5, loop: true })
@@ -18,7 +19,7 @@
         const teleportSound = new BABYLON.Sound('teleport', 'https://dl.dropbox.com/s/yw2ita3wy7rm8sc/teleport.mp3', scene)
 
         engine.isDeterministicLockStep
-        var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 8, 20, BABYLON.Vector3.Zero(), scene);
+        const camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 8, 20, BABYLON.Vector3.Zero(), scene);
 
         camera.attachControl(canvas, true);
         camera.alpha = 4.0310;
