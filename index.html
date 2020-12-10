@@ -48,6 +48,7 @@
                 button.color = "magenta";
                 button.background = "violet";
                 advancedTexture.addControl(button);
+                button.onPointerClickObservable.add(initGame)
             }, { volume: 0.5, loop: true })
             const collideSound = new BABYLON.Sound('collide', 'https://dl.dropbox.com/s/w6rt57gsrqcx86x/collide.mp3', scene)
             const dangerSound = new BABYLON.Sound('danger', 'https://dl.dropbox.com/s/2mi0tlzjoqluz9j/danger.mp3', scene)
@@ -80,7 +81,7 @@
                 engine.resize()
             })
 
-            button.onPointerClickObservable.add(() => {
+            function initGame() {
                 document.querySelector('#renderCanvas').requestFullscreen()
                 BABYLON.Engine.audioEngine.unlock()
                 themeSound.play()
@@ -155,7 +156,7 @@
                         teleportSound.play()
                     }
                 })
-            })
+            }
         })
     </script>
 </body>
