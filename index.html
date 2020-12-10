@@ -61,6 +61,15 @@
             button.color = "magenta";
             button.background = "violet";
             advancedTexture.addControl(button);
+
+            engine.runRenderLoop(() => {
+                scene.render()
+            })
+
+            window.addEventListener('resize', () => {
+                engine.resize()
+            })
+
             button.onPointerClickObservable.add(() => {
                 document.querySelector('#renderCanvas').requestFullscreen()
                 BABYLON.Engine.audioEngine.unlock()
@@ -135,11 +144,6 @@
                         sphere.physicsImpostor.setLinearVelocity(BABYLON.Vector3.Zero())
                         teleportSound.play()
                     }
-                })
-
-
-                engine.runRenderLoop(() => {
-                    scene.render()
                 })
             })
         })
