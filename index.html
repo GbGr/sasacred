@@ -26,6 +26,9 @@
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script>
+        (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+    </script>
+    <script>
         Ammo({ locateLocate: () => 'https://gbgr.github.io/sasacred/ammo.wasm.wasm' }).then((ammo) => {
             const canvas = document.querySelector('#renderCanvas')
             const engine = new BABYLON.Engine(canvas, true, {}, true)
