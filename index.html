@@ -22,6 +22,12 @@
 </head>
 <body>
     <canvas id="renderCanvas"></canvas>
+    <script>
+        if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent);) {
+            if (!confirm('Your browser is shit, do you know that?')) { alert('Even Microsft Edge is more more better') }
+            window.location.href = 'https://www.google.com/intl/ru_ru/chrome/'
+        }
+    </script>
     <script src="/sasacred/ammo.wasm.js"></script>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
